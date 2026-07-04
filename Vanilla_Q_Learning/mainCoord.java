@@ -8,15 +8,15 @@ import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;*/
 
-public class main {
+public class mainCoord {
     // meta variable
-    static String fileName = "Capital_Cities.txt";
+    static String fileName = "California_Cities.txt";
 
     // CHANGE CITY AND PRIZEGOAL
     static String begin = "";
     static String end = "";
     static double budget = 0; // budget in miles
-    static int n = 48;
+    static int n = 620;
     private static double remainingBudget;
 
     // static variables to be tweaked by user
@@ -35,7 +35,7 @@ public class main {
     static final int LAST_VISIT = 2;
 
     // pre-initialization parameters (do not touch)
-    static LinkedList<CityNode> arrCities;
+    static LinkedList<CityNodeCoord> arrCities;
     static ArrayList<String> nameList;
     static Graph sGraph;
     static double[][] Q;
@@ -250,7 +250,7 @@ public class main {
                 if (i == j) {
                     System.out.print(9999.99);
                 } else {
-                    double dist = CityNode.getDistance(arrCities.get(i), arrCities.get(j));
+                    double dist = CityNodeCoord.getDistance(arrCities.get(i), arrCities.get(j));
                     System.out.printf("%.2f", dist);
                 }
 
@@ -519,7 +519,7 @@ public class main {
                 double lon = scan.nextDouble();
                 int pop = scan.nextInt();
 
-                arrCities.add(new CityNode(name, lat, lon, pop));
+                arrCities.add(new CityNodeCoord(name, lat, lon, pop));
                 nameList.add(name.toLowerCase());
             }
             scan.close();
@@ -539,7 +539,7 @@ public class main {
         if (nameList.contains(startCity) && nameList.contains(endCity)) {
             if (startCity.equalsIgnoreCase(endCity)) {
                 int sIndex = nameList.indexOf(startCity);
-                CityNode t1 = new CityNode(arrCities.get(sIndex));
+                CityNodeCoord t1 = new CityNodeCoord(arrCities.get(sIndex));
                 arrCities.remove(sIndex);
                 nameList.remove(sIndex);
 
@@ -547,12 +547,12 @@ public class main {
                 // arrCities.add(t1); this line adds an extra node at the end making size==49
             } else {
                 int sIndex = nameList.indexOf(startCity);
-                CityNode t1 = new CityNode(arrCities.get(sIndex));
+                CityNodeCoord t1 = new CityNodeCoord(arrCities.get(sIndex));
                 arrCities.remove(sIndex);
                 nameList.remove(sIndex);
 
                 int fIndex = nameList.indexOf(endCity);
-                CityNode t2 = new CityNode(arrCities.get(fIndex));
+                CityNodeCoord t2 = new CityNodeCoord(arrCities.get(fIndex));
                 arrCities.remove(fIndex);
 
                 arrCities.add(0, t1);
@@ -589,8 +589,8 @@ public class main {
                 } else {
                     // randomly mark some path as inaccessible
                     if (rand.nextDouble() > missingProb) {
-                        sGraph.setEdge(i, j, CityNode.getDistance(arrCities.get(i), arrCities.get(j)));
-                        sGraph.setEdge(j, i, CityNode.getDistance(arrCities.get(j), arrCities.get(i)));
+                        sGraph.setEdge(i, j, CityNodeCoord.getDistance(arrCities.get(i), arrCities.get(j)));
+                        sGraph.setEdge(j, i, CityNodeCoord.getDistance(arrCities.get(j), arrCities.get(i)));
                     } else {
                         sGraph.setEdge(i, j, Double.MAX_VALUE);
                         sGraph.setEdge(j, i, Double.MAX_VALUE);
@@ -629,13 +629,13 @@ public class main {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the start city: ");
         //begin = scanner.nextLine();
-        begin = "Albany,NY";
+        begin = "SanDiegoArea_001";
         System.out.print("Enter the end city: ");
         //end = scanner.nextLine();
-        end = "Albany,NY";
+        end = "SanDiegoArea_001";
         System.out.print("Enter the budget in miles: ");
         //budget = scanner.nextInt();
-        budget = 10000;
+        budget = 1100000;
     }
 
     /*
@@ -657,13 +657,13 @@ public class main {
             Scanner scan = new Scanner(towns);
             // (2)
             int originIndex = 0;
-            while (scan.hasNextLine()) {
+            while (scan.hasNext()) {
                 String name = scan.next();
                 double lat = scan.nextDouble();
                 double lon = scan.nextDouble();
                 int pop = scan.nextInt();
 
-                arrCities.add(new CityNode(name, lat, lon, pop));
+                arrCities.add(new CityNodeCoord(name, lat, lon, pop));
                 nameList.add(name.toLowerCase());
 
                 arrCities.get(arrCities.size() - 1).originalIndex = originIndex;
@@ -686,7 +686,7 @@ public class main {
         if (nameList.contains(startCity) && nameList.contains(endCity)) {
             if (startCity.equalsIgnoreCase(endCity)) {
                 int sIndex = nameList.indexOf(startCity);
-                CityNode t1 = new CityNode(arrCities.get(sIndex));
+                CityNodeCoord t1 = new CityNodeCoord(arrCities.get(sIndex));
                 t1.originalIndex = arrCities.get(sIndex).originalIndex;
                 arrCities.remove(sIndex);
                 nameList.remove(sIndex);
@@ -695,13 +695,13 @@ public class main {
                 arrCities.add(t1);
             } else {
                 int sIndex = nameList.indexOf(startCity);
-                CityNode t1 = new CityNode(arrCities.get(sIndex));
+                CityNodeCoord t1 = new CityNodeCoord(arrCities.get(sIndex));
                 t1.originalIndex = arrCities.get(sIndex).originalIndex;
                 arrCities.remove(sIndex);
                 nameList.remove(sIndex);
 
                 int fIndex = nameList.indexOf(endCity);
-                CityNode t2 = new CityNode(arrCities.get(fIndex));
+                CityNodeCoord t2 = new CityNodeCoord(arrCities.get(fIndex));
                 t2.originalIndex = arrCities.get(fIndex).originalIndex;
                 arrCities.remove(fIndex);
 
@@ -739,8 +739,8 @@ public class main {
                 } else {
                     // randomly mark some path as inaccessible
                     if (rand.nextDouble() > missingProb) {
-                        sGraph.setEdge(i, j, CityNode.getDistance(arrCities.get(i), arrCities.get(j)));
-                        sGraph.setEdge(j, i, CityNode.getDistance(arrCities.get(j), arrCities.get(i)));
+                        sGraph.setEdge(i, j, CityNodeCoord.getDistance(arrCities.get(i), arrCities.get(j)));
+                        sGraph.setEdge(j, i, CityNodeCoord.getDistance(arrCities.get(j), arrCities.get(i)));
                     } else {
                         sGraph.setEdge(i, j, Double.MAX_VALUE);
                         sGraph.setEdge(j, i, Double.MAX_VALUE);
@@ -954,10 +954,14 @@ public class main {
                 for (int i = 0; i < feasible.size(); i++) {
                     prob[i] /= total;
                 }
+                //Infinite Loop Fix 
+                if (total == 0) {
+                    return feasible.get(rand.nextInt(feasible.size()));
+                }
 
                 double target = rand.nextDouble();
                 int idx = -1;
-                while (target > 0) {
+                while (target > 0 && idx < feasible.size() - 1) {
                     idx++;
                     target -= prob[idx];
                 }

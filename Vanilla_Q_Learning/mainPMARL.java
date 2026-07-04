@@ -8,7 +8,7 @@ import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;*/
 
-public class main {
+public class mainPMARL {
     // meta variable
     static String fileName = "Capital_Cities.txt";
 
@@ -21,7 +21,7 @@ public class main {
 
     // static variables to be tweaked by user
     static final int TRIALS = 4000;
-    static final int NUM_AGENTS = 1;
+    static final int NUM_AGENTS = 5;
     static final double W = 1000.0; // constant value to update the reward table
     static double alpha = 0.125; // .125 learning rate
     static double gamma = 0.35; // .35 discount factor
@@ -138,7 +138,7 @@ public class main {
         System.out.printf("\nRoute: %s\n", route.toString());
         System.out.printf("Remaining Budget: %.2f miles\n", remainingBudget);
 
-        System.out.println("\n========== Second greedy algorithm ==========");
+        System.out.println("\n========== Second greedy algorithm PMARL==========");
         initList();
         initGraph();
         startTime = System.nanoTime();
@@ -818,9 +818,8 @@ public class main {
                             aj.isDone = true;
                         }
                         double maxQ = maxQ(aj, nextState);
-                        Q[aj.curState][nextState] = (1 - alpha) * Q[aj.curState][nextState] + alpha * (R[aj.curState][nextState] + gamma * maxQ);
-                        //Q[aj.curState][nextState] = (1 - alpha) * Q[aj.curState][nextState] + alpha *
-                        //gamma * maxQ; Above changed to add R for Q Learning.
+                        Q[aj.curState][nextState] = (1 - alpha) * Q[aj.curState][nextState] + alpha *
+                        gamma * maxQ;
                         aj.indexPath.add(nextState);
                         aj.total_wt += aj.shortestPath(aj.curState, nextState);
                         // if(nextState!=0 && nextState!=aj.getLastNode()){
@@ -840,14 +839,26 @@ public class main {
             jStar.resetAgentMarks();
 
             
-            
+            for (int v = 0; v < path.size() - 1; v++) {
+            double q = Q[path.get(v)][path.get(v + 1)];
+            double maxQ = maxQ(jStar, path.get(v + 1));
+            R[path.get(v)][path.get(v + 1)] += (W / jStar.total_prize);
+            Q[path.get(v)][path.get(v + 1)] = (1 - alpha) * q
+            + alpha * (R[path.get(v)][path.get(v + 1)] + gamma * maxQ);
+            }
              
             prizeCol.append(""+i+"\t"+(aList[mostFitIndex].total_prize-100)+"\n");
             if (aList[mostFitIndex].total_prize > prizeMax) {
                 prizeMax = aList[mostFitIndex].total_prize;
                 routeMax = path;
                 routeMaxIter = i;
-                
+                for (int v = 0; v < path.size() - 1; v++) {
+                    double q = Q[path.get(v)][path.get(v + 1)];
+                    double maxQ = maxQ(jStar, path.get(v + 1));
+                    R[path.get(v)][path.get(v + 1)] += (i * W / jStar.total_prize);
+                    Q[path.get(v)][path.get(v + 1)] = (1 - alpha) * q
+                            + alpha * (R[path.get(v)][path.get(v + 1)] + gamma * maxQ);
+                }
             }
             // check current Q table route:
             /*
