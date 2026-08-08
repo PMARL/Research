@@ -1,6 +1,11 @@
 # BC-TSP: Budget-Constrained Traveling Salesman Problem
+## Definition
+It is a single-agent Q-Learning baseline so the paper can show what
+the PAM, PRM, and CL of the P-MARL brings upon Q-learning. This produces an algorithm × distance metric of the 48 capitals, and a 620-city California instance extracted from the
+USA13509 TSPLIB benchmark, we have CityNodeCoord swaps Haversine for
+plain Euclidean distance in raw coordinate units.
 
-Implementation of the algorithms from the paper:
+## Implementation of the algorithms from the paper:
 **"Budget-Constrained Traveling Salesman Problem: a Cooperative Multi-Agent Reinforcement Learning Approach"**
 https://csc.csudh.edu/btang/secon_2024_journal.pdf
 
