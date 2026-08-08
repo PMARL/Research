@@ -1,4 +1,10 @@
 # BC-TSP Attention Comparison
+## Definition
+This studies how does P-MARL stack up against a modern neural
+combinatorial-optimization model which  converts the capital-city
+instances into the model's format, runs the pretrained checkpoint, and
+repairs the decoded routes by trimming visits from the end until they
+fit the same budget convention.
 
 This repository contains the final Fig. 14 plot files and the original source code used to generate the comparison data for P-MARL and the Attention/NCO routing model.
 
