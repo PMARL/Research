@@ -9,6 +9,7 @@ Q-table from the previous round and then locally repairs the previous
 best path . for any node whose prize dropped, it hunts a better-prized
 replacement within a 1,500 m neighborhood that still fits the
 remaining budget.
+
  **"Budget-Constrained Traveling Salesman Problem: a Cooperative Multi-Agent Reinforcement Learning Approach"**
 (P-MARL). It has two independent entry points:
 
