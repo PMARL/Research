@@ -1,7 +1,15 @@
 # TransferLearning — P-MARL for BC-TSP
-
-This is the actively-maintained Maven implementation of the paper **"Budget-Constrained
-Traveling Salesman Problem: a Cooperative Multi-Agent Reinforcement Learning Approach"**
+## Definition
+Robotic Sensor Network simulation with 100 sensors in a 10 km × 10 km field, four
+battery budgets (0.5–2.0 KWh converted to meters via KWh × 3,600,000 /
+102), and 10 rounds per trial in which 10 sensors have their packet
+counts re-randomized each round. Each round it pits cold started
+P-MARL against Algorithm of transfer learning, which warm-starts the
+Q-table from the previous round and then locally repairs the previous
+best path . for any node whose prize dropped, it hunts a better-prized
+replacement within a 1,500 m neighborhood that still fits the
+remaining budget.
+ **"Budget-Constrained Traveling Salesman Problem: a Cooperative Multi-Agent Reinforcement Learning Approach"**
 (P-MARL). It has two independent entry points:
 
 | Class | What it runs | Scale |
