@@ -9,7 +9,7 @@ realised adjacency-matrix graph that runs Floyd–Warshall at
 construction that detours through intermediate cities are already
 priced in, and CityNode holds lat/lon/prize combination with Haversine
 distances in miles. Inputs are 48 US state capitals.
-Implementation of the algorithms from the paper:
+## Implementation of the algorithms from the paper:
 **"Budget-Constrained Traveling Salesman Problem: a Cooperative Multi-Agent Reinforcement Learning Approach"**
 https://csc.csudh.edu/btang/secon_2024_journal.pdf
 
