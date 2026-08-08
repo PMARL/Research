@@ -1,5 +1,14 @@
 # BC-TSP: Budget-Constrained Traveling Salesman Problem
-
+## Definition
+We have the code executes Greedy 1 (traverseP), Greedy 2 (traverseR),
+and P-MARL (learnQ + traverseQ) for one city/budget , and dumps the
+cost matrix and prize vector formatted for pasting into IBM CPLEX
+Optimization Studio. The Exploration phase does a hyperparameter grid
+search over trials, agents, alpha, gamma, and q0. The graph is a
+realised adjacency-matrix graph that runs Floyd–Warshall at
+construction that detours through intermediate cities are already
+priced in, and CityNode holds lat/lon/prize combination with Haversine
+distances in miles. Inputs are 48 US state capitals.
 Implementation of the algorithms from the paper:
 **"Budget-Constrained Traveling Salesman Problem: a Cooperative Multi-Agent Reinforcement Learning Approach"**
 https://csc.csudh.edu/btang/secon_2024_journal.pdf
