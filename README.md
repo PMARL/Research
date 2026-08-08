@@ -1,1 +1,1 @@
-#PMARL Research
+# In the  Budget-Constrained Traveling Salesman Problem (BC-TSP), the salesman must travel from a source to a destination under a hard travel budget, and instead of visiting every node, it picks a subset of nodes to maximize the total prize (or data packets) collected. The multi-agent system, P-MARL, independently explores prize-weighted paths and then cooperatively reinforces the best-prize route found each episode. Main components include a Prize-based Action Mechanism (PAM), a Prize-based Reward Model (PRM), and Cooperative Learning (CL).
